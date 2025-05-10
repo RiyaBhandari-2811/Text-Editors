@@ -24,6 +24,7 @@ import {
   AlignRight,
   AlignLeft,
   AlignCenter,
+  AlignJustify,
   Minus,
   Undo2,
   Redo2,
@@ -169,6 +170,11 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
       icon: <AlignCenter />,
       onClick: () => editor.chain().focus().setTextAlign("center").run(),
       preesed: editor.isActive({ textAlign: "center" }),
+    },
+    {
+      icon: <AlignJustify />,
+      onClick: () => editor.chain().focus().setTextAlign("justify").run(),
+      preesed: editor.isActive({ textAlign: "justify" }),
     },
     {
       icon: <Minus />,
