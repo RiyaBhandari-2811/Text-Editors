@@ -1,3 +1,5 @@
+
+
 const MenuBar = ({ editor }: any) => {
   if (!editor) {
     return null;
