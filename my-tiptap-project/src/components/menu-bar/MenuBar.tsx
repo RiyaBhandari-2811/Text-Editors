@@ -3,6 +3,14 @@ const MenuBar = ({ editor }: any) => {
     return null;
   }
 
+//   const Options = [
+//     {
+//         icon: 
+//         onClick: 
+//         pressed: 
+//     }
+//   ]
+
   return (
     <div className="control-group">
       <div className="button-group">
