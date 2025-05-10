@@ -29,10 +29,11 @@ import {
   Redo2,
 } from "lucide-react";
 
-import GifBoxOutlinedIcon from '@mui/icons-material/GifBoxOutlined';
+import GifBoxOutlinedIcon from "@mui/icons-material/GifBoxOutlined";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Editor } from "@tiptap/react";
 
-const MenuBar = ({ editor }: any) => {
+const MenuBar = ({ editor }: { editor: Editor }) => {
   if (!editor) {
     return null;
   }
@@ -187,12 +188,27 @@ const MenuBar = ({ editor }: any) => {
   ];
 
   return (
-    <ToggleButtonGroup  color="primary">
+    <ToggleButtonGroup
+      sx={{
+        display: "flex",
+        flexWrap: "wrap",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
       {Options.map((option, index) => (
-        <ToggleButton key={index} value={index}
-        onClick={option.onClick}
-        className={option.preesed}
-        >{option.icon}</ToggleButton>
+        <ToggleButton
+          key={index}
+          value={index}
+          onClick={option.onClick}
+          className={option.preesed}
+          sx={{
+            border: "1px solid grey",
+            borderRadius: "10px",
+          }}
+        >
+          {option.icon}
+        </ToggleButton>
       ))}
     </ToggleButtonGroup>
   );
