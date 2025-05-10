@@ -2,6 +2,8 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import MenuBar from "../menu-bar/MenuBar";
 import "./Tiptap.css";
+import { Stack } from "@mui/material";
+import TextAlign from "@tiptap/extension-text-align";
 
 const extensions = [
   StarterKit.configure({
@@ -9,6 +11,9 @@ const extensions = [
       keepMarks: true,
       keepAttributes: false,
     },
+  }),
+  TextAlign.configure({
+    types: ["heading", "paragraph"],
   }),
 ];
 
@@ -26,10 +31,15 @@ const Tiptap = () => {
   });
   if (!editor) return null;
   return (
-    <>
+    <Stack
+      spacing={2}
+      marginTop={5}
+      alignItems={"center"}
+      justifyContent={"center"}
+    >
       <MenuBar editor={editor} />
       <EditorContent editor={editor} />
-    </>
+    </Stack>
   );
 };
 
