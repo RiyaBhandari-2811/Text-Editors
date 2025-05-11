@@ -4,6 +4,7 @@ import MenuBar from "../menu-bar/MenuBar";
 import "./Tiptap.css";
 import { Stack } from "@mui/material";
 import TextAlign from "@tiptap/extension-text-align";
+import Underline from "@tiptap/extension-underline";
 
 const extensions = [
   StarterKit.configure({
@@ -15,6 +16,7 @@ const extensions = [
   TextAlign.configure({
     types: ["heading", "paragraph"],
   }),
+  Underline.configure({}),
 ];
 
 const content = "<p> Hello </p>";
