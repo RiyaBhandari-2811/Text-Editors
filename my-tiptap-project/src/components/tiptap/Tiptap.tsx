@@ -5,7 +5,8 @@ import "./Tiptap.css";
 import { Stack } from "@mui/material";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import Subscript from '@tiptap/extension-subscript'
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
 
 const extensions = [
   StarterKit.configure({
@@ -19,6 +20,7 @@ const extensions = [
   }),
   Underline.configure({}),
   Subscript.configure({}),
+  Superscript.configure({}),
 ];
 
 const content = "<p> Hello </p>";
