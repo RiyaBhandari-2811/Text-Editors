@@ -33,10 +33,32 @@ import {
 import GifBoxOutlinedIcon from "@mui/icons-material/GifBoxOutlined";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Editor } from "@tiptap/react";
+import { Popper, TextField, Button, Box } from "@mui/material";
+import { useState, useRef } from "react";
 
 const MenuBar = ({ editor }: { editor: Editor }) => {
+  const [linkInputOpen, setLinkInputOpen] = useState(false);
+  const [linkUrl, setLinkUrl] = useState("");
+  const anchorRef = useRef<HTMLDivElement | null>(null);
+
   if (!editor) {
     return null;
+  }
+
+  function applyLink() {
+    if (!editor || !linkUrl) return;
+    const { empty } = editor.state.selection;
+    if (empty) return;
+
+    editor
+      .chain()
+      .focus()
+      .extendMarkRange("link")
+      .setLink({ href: linkUrl })
+      .run();
+
+    setLinkInputOpen(false);
+    setLinkUrl("");
   }
 
   const Options = [
@@ -137,7 +159,13 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
     },
     {
       icon: <Link />,
-      onClick: () => editor.chain().focus().toggleLink({ href: "" }).run(),
+      onClick: () => {
+        const { empty } = editor.state.selection;
+        if (empty) return;
+
+        setLinkInputOpen(true);
+      },
+
       preesed: editor.isActive("link"),
     },
     {
@@ -194,29 +222,57 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
   ];
 
   return (
-    <ToggleButtonGroup
-      sx={{
-        display: "flex",
-        flexWrap: "wrap",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      {Options.map((option, index) => (
-        <ToggleButton
-          key={index}
-          value={index}
-          onClick={option.onClick}
-          className={option.preesed}
+    <div ref={anchorRef}>
+      <ToggleButtonGroup
+        sx={{
+          display: "flex",
+          flexWrap: "wrap",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {Options.map((option, index) => (
+          <ToggleButton
+            key={index}
+            value={index}
+            onClick={option.onClick}
+            sx={{
+              border: "1px solid grey",
+              borderRadius: "10px",
+            }}
+          >
+            {option.icon}
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+
+      <Popper
+        open={linkInputOpen}
+        anchorEl={anchorRef.current}
+        placement="bottom-start"
+      >
+        <Box
           sx={{
-            border: "1px solid grey",
-            borderRadius: "10px",
+            display: "flex",
+            gap: 1,
+            bgcolor: "white",
+            p: 2,
+            boxShadow: 3,
+            borderRadius: 1,
           }}
         >
-          {option.icon}
-        </ToggleButton>
-      ))}
-    </ToggleButtonGroup>
+          <TextField
+            size="small"
+            placeholder="Enter URL"
+            value={linkUrl}
+            onChange={(e) => setLinkUrl(e.target.value)}
+          />
+          <Button variant="contained" onClick={applyLink}>
+            Add Link
+          </Button>
+        </Box>
+      </Popper>
+    </div>
   );
 };
 

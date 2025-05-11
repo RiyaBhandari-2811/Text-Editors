@@ -7,7 +7,8 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
-import Highlight from '@tiptap/extension-highlight';
+import Highlight from "@tiptap/extension-highlight";
+import Link from "@tiptap/extension-link";
 
 const extensions = [
   StarterKit.configure({
@@ -23,6 +24,11 @@ const extensions = [
   Subscript.configure({}),
   Superscript.configure({}),
   Highlight.configure({}),
+  Link.configure({
+    HTMLAttributes: {
+      target: "_blank",
+    },
+  }),
 ];
 
 const content = "<p> Hello </p>";
