@@ -4,6 +4,11 @@ import MenuBar from "../menu-bar/MenuBar";
 import "./Tiptap.css";
 import { Stack } from "@mui/material";
 import TextAlign from "@tiptap/extension-text-align";
+import Underline from "@tiptap/extension-underline";
+import Subscript from "@tiptap/extension-subscript";
+import Superscript from "@tiptap/extension-superscript";
+import Highlight from "@tiptap/extension-highlight";
+import Link from "@tiptap/extension-link";
 
 const extensions = [
   StarterKit.configure({
@@ -14,6 +19,15 @@ const extensions = [
   }),
   TextAlign.configure({
     types: ["heading", "paragraph"],
+  }),
+  Underline.configure({}),
+  Subscript.configure({}),
+  Superscript.configure({}),
+  Highlight.configure({}),
+  Link.configure({
+    HTMLAttributes: {
+      target: "_blank",
+    },
   }),
 ];
 

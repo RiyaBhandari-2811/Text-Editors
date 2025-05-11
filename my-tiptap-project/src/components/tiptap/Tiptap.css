@@ -1,7 +1,8 @@
 .editor-div {
     background-color: aliceblue;
     width: 70vw;
-    height: auto;
+    min-height: 20vh;
+    max-height: auto;
     padding: 10px;
     border: 2px solid rgb(177, 215, 249);
     border-radius: 10px;
