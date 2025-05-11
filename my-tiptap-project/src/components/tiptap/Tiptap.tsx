@@ -7,6 +7,7 @@ import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
+import Highlight from '@tiptap/extension-highlight';
 
 const extensions = [
   StarterKit.configure({
@@ -21,6 +22,7 @@ const extensions = [
   Underline.configure({}),
   Subscript.configure({}),
   Superscript.configure({}),
+  Highlight.configure({}),
 ];
 
 const content = "<p> Hello </p>";
