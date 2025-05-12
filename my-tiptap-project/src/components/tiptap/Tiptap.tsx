@@ -9,6 +9,8 @@ import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
 import Highlight from "@tiptap/extension-highlight";
 import Link from "@tiptap/extension-link";
+import TaskItem from "@tiptap/extension-task-item";
+import TaskList from "@tiptap/extension-task-list";
 
 const extensions = [
   StarterKit.configure({
@@ -28,6 +30,10 @@ const extensions = [
     HTMLAttributes: {
       target: "_blank",
     },
+  }),
+  TaskList.configure({}),
+  TaskItem.configure({
+    nested: true,
   }),
 ];
 
