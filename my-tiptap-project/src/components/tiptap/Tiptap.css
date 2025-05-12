@@ -7,3 +7,14 @@
     border: 2px solid rgb(177, 215, 249);
     border-radius: 10px;
 }
+
+
+ul[data-type="taskList"] {
+  list-style: none; /* removes bullets */
+  padding-left: 0;   /* optional: removes indentation */
+}
+
+ul[data-type="taskList"] li {
+  display: flex;
+  align-items: center;
+}
