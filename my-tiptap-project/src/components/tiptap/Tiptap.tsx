@@ -11,6 +11,7 @@ import Highlight from "@tiptap/extension-highlight";
 import Link from "@tiptap/extension-link";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
+import Image from "@tiptap/extension-image";
 
 const extensions = [
   StarterKit.configure({
@@ -34,6 +35,9 @@ const extensions = [
   TaskList.configure({}),
   TaskItem.configure({
     nested: true,
+  }),
+  Image.configure({
+    inline: true,
   }),
 ];
 

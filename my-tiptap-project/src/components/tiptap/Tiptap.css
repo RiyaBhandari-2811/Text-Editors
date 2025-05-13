@@ -18,3 +18,18 @@ ul[data-type="taskList"] li {
   display: flex;
   align-items: center;
 }
+
+.tiptap:first-child {
+  margin-top: 0;
+}
+
+.tiptap img {
+  display: block;
+  height: auto;
+  margin: 1.5rem 0;
+  max-width: 100%;
+}
+
+.tiptap img.ProseMirror-selectednode {
+  outline: 3px solid var(--purple);
+}

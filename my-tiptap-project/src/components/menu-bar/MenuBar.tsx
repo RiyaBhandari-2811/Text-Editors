@@ -34,7 +34,7 @@ import GifBoxOutlinedIcon from "@mui/icons-material/GifBoxOutlined";
 import { ToggleButton, ToggleButtonGroup } from "@mui/material";
 import { Editor } from "@tiptap/react";
 import { Popper, TextField, Button, Box } from "@mui/material";
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 
 const MenuBar = ({ editor }: { editor: Editor }) => {
   const [linkInputOpen, setLinkInputOpen] = useState(false);
@@ -60,6 +60,14 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
     setLinkInputOpen(false);
     setLinkUrl("");
   }
+
+  const addImage = useCallback(() => {
+    const url = window.prompt("URL");
+
+    if (url) {
+      editor.chain().focus().setImage({ src: url }).run();
+    }
+  }, [editor]);
 
   const Options = [
     {
@@ -149,7 +157,7 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
     },
     {
       icon: <ImagePlus />,
-      onClick: () => editor.chain().focus().setImage({ src: "" }).run(),
+      onClick: () => addImage(),
       preesed: false,
     },
     {
