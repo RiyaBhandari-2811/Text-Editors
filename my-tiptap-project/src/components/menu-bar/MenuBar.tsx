@@ -40,6 +40,8 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
   const [linkInputOpen, setLinkInputOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const anchorRef = useRef<HTMLDivElement | null>(null);
+  const [showPicker, setShowPicker] = useState(false);
+  const [color, setColor] = useState("#000000");
 
   if (!editor) {
     return null;
@@ -60,6 +62,11 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
     setLinkInputOpen(false);
     setLinkUrl("");
   }
+
+  const applyColor = () => {
+    editor?.chain().focus().setColor(color).run();
+    setShowPicker(false);
+  };
 
   const addImage = useCallback(() => {
     const url = window.prompt("URL");
@@ -132,8 +139,8 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
     },
     {
       icon: <PaintRoller />,
-      onClick: () => editor.chain().focus().setColor("#000000").run(),
-      preesed: editor.isActive("textStyle", { color: "#000000" }),
+      onClick: () => setShowPicker(!showPicker),
+      preesed: editor.isActive("textStyle", { color: color }),
     },
     {
       icon: <Highlighter />,
@@ -253,6 +260,49 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
           </ToggleButton>
         ))}
       </ToggleButtonGroup>
+
+      {/* {showPicker && (
+        <input
+          type="color"
+          value={color}
+          onChange={(e) => applyColor(e.target.value)}
+          style={{ border: "none", background: "none" }}
+        />
+      )} */}
+
+      <Popper
+        open={showPicker}
+        anchorEl={anchorRef.current}
+        placement="bottom-start"
+      >
+        <Box
+          sx={{
+            display: "flex",
+            gap: 1,
+            bgcolor: "white",
+            p: 2,
+            boxShadow: 3,
+            borderRadius: 1,
+            alignItems: "center",
+          }}
+        >
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            style={{
+              width: 40,
+              height: 40,
+              padding: 0,
+              border: "none",
+              cursor: "pointer",
+            }}
+          />
+          <Button variant="contained" onClick={applyColor}>
+            Apply
+          </Button>
+        </Box>
+      </Popper>
 
       <Popper
         open={linkInputOpen}
