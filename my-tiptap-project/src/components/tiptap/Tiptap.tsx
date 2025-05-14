@@ -12,6 +12,10 @@ import Link from "@tiptap/extension-link";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import Image from "@tiptap/extension-image";
+import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
+import { all, createLowlight } from "lowlight";
+
+const lowlight = createLowlight(all);
 
 const extensions = [
   StarterKit.configure({
@@ -38,6 +42,10 @@ const extensions = [
   }),
   Image.configure({
     inline: true,
+  }),
+  CodeBlockLowlight.configure({
+    lowlight,
+    defaultLanguage: "java",
   }),
 ];
 
