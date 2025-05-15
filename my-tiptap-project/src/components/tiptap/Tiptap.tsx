@@ -4,7 +4,7 @@ import MenuBar from "../menu-bar/MenuBar";
 import "./Tiptap.css";
 import { Stack } from "@mui/material";
 import TextAlign from "@tiptap/extension-text-align";
-import TextStyle from '@tiptap/extension-text-style'
+import TextStyle from "@tiptap/extension-text-style";
 import Underline from "@tiptap/extension-underline";
 import Subscript from "@tiptap/extension-subscript";
 import Superscript from "@tiptap/extension-superscript";
@@ -13,7 +13,11 @@ import Link from "@tiptap/extension-link";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import Image from "@tiptap/extension-image";
-import { Color } from '@tiptap/extension-color'
+import { Color } from "@tiptap/extension-color";
+import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
+import { all, createLowlight } from "lowlight";
+
+const lowlight = createLowlight(all);
 
 const extensions = [
   StarterKit.configure({
@@ -43,9 +47,12 @@ const extensions = [
   }),
   TextStyle.configure({}),
   Color.configure({
-  types: ['textStyle'],
-})
-
+    types: ["textStyle"],
+  }),
+  CodeBlockLowlight.configure({
+    lowlight,
+    defaultLanguage: "kotlin",
+  }),
 ];
 
 const content = "<p> Hello </p>";
@@ -68,7 +75,7 @@ const Tiptap = () => {
       alignItems={"center"}
       justifyContent={"center"}
     >
-      <MenuBar editor={editor} />
+      <MenuBar editor={editor} lowlight={lowlight} />
       <EditorContent editor={editor} />
     </Stack>
   );

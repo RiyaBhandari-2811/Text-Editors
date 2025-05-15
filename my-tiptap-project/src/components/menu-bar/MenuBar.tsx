@@ -36,12 +36,15 @@ import { Editor } from "@tiptap/react";
 import { Popper, TextField, Button, Box } from "@mui/material";
 import { useState, useRef, useCallback } from "react";
 
-const MenuBar = ({ editor }: { editor: Editor }) => {
+const MenuBar = ({ editor, lowlight }: { editor: Editor; lowlight: any }) => {
   const [linkInputOpen, setLinkInputOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const anchorRef = useRef<HTMLDivElement | null>(null);
   const [showPicker, setShowPicker] = useState(false);
   const [color, setColor] = useState("#000000");
+  const [codeLangPopperOpen, setCodeLangPopperOpen] = useState(false);
+  const [selectedNodePos, setSelectedNodePos] = useState<number | null>(null);
+  const [language, setLanguage] = useState("kotlin");
 
   if (!editor) {
     return null;
@@ -196,7 +199,13 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
     },
     {
       icon: <CodeXml />,
-      onClick: () => editor.chain().focus().toggleCodeBlock().run(),
+      onClick: () => {
+        editor.chain().focus().toggleCodeBlock().run();
+        setCodeLangPopperOpen(true);
+
+        const { $from } = editor.state.selection;
+        setSelectedNodePos($from.before($from.depth)); // store code block position
+      },
       preesed: editor.isActive("codeBlock"),
     },
     {
@@ -261,14 +270,53 @@ const MenuBar = ({ editor }: { editor: Editor }) => {
         ))}
       </ToggleButtonGroup>
 
-      {/* {showPicker && (
-        <input
-          type="color"
-          value={color}
-          onChange={(e) => applyColor(e.target.value)}
-          style={{ border: "none", background: "none" }}
-        />
-      )} */}
+      <Popper
+        open={codeLangPopperOpen}
+        anchorEl={anchorRef.current}
+        placement="bottom-start"
+      >
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 1,
+            bgcolor: "white",
+            p: 2,
+            boxShadow: 3,
+            borderRadius: 1,
+            minWidth: 200,
+          }}
+        >
+          <TextField
+            select
+            label="Language"
+            value={language}
+            onChange={(e) => {
+              const newLang = e.target.value;
+              setLanguage(newLang);
+              if (selectedNodePos !== null) {
+                editor
+                  .chain()
+                  .focus()
+                  .command(({ tr }) => {
+                    tr.setNodeMarkup(selectedNodePos, undefined, {
+                      language: newLang,
+                    });
+                    return true;
+                  })
+                  .run();
+              }
+            }}
+            SelectProps={{ native: true }}
+          >
+            {lowlight.listLanguages().map((lang: any) => (
+              <option key={lang} value={lang}>
+                {lang}
+              </option>
+            ))}
+          </TextField>
+        </Box>
+      </Popper>
 
       <Popper
         open={showPicker}
