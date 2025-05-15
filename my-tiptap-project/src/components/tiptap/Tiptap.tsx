@@ -16,6 +16,10 @@ import Image from "@tiptap/extension-image";
 import { Color } from "@tiptap/extension-color";
 import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
 import { all, createLowlight } from "lowlight";
+import Table from "@tiptap/extension-table";
+import TableCell from "@tiptap/extension-table-cell";
+import TableHeader from "@tiptap/extension-table-header";
+import TableRow from '@tiptap/extension-table-row'
 
 const lowlight = createLowlight(all);
 
@@ -53,6 +57,12 @@ const extensions = [
     lowlight,
     defaultLanguage: "kotlin",
   }),
+  Table.configure({
+    resizable: true,
+  }),
+  TableRow,
+  TableHeader,
+  TableCell,
 ];
 
 const content = "<p> Hello </p>";
