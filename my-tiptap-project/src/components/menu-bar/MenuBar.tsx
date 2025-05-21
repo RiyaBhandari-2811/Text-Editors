@@ -305,6 +305,7 @@ const MenuBar = ({ editor, lowlight }: { editor: Editor; lowlight: any }) => {
                     return true;
                   })
                   .run();
+                setCodeLangPopperOpen(false);
               }
             }}
             SelectProps={{ native: true }}
