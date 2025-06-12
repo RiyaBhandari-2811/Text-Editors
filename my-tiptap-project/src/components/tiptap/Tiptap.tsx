@@ -71,6 +71,7 @@ const Tiptap = () => {
 
   const editor = useEditor({
     extensions,
+    autofocus: true,
     content: post,
     editorProps: {
       attributes: {
